@@ -8,7 +8,9 @@
         "hot": "mix watch --hot",
         "prod": "npm run production",
         "production": "mix --production",
-        "h5": "cd ./h5 && yarn dev"
+        "h5": "cd ./h5 && yarn dev",
+        "up": "cd ./laradock && docker-compose up -d mysql nginx workspace redis",
+        "down": "cd ./laradock && docker-compose stop"
     },
     "devDependencies": {
         "axios": "^0.21",
