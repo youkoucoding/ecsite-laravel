@@ -31,6 +31,8 @@ If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Lar
 
 Laravel follows the PSR-2 coding standard and the PSR-4 autoloading standard.
 
+[「PSR 规范」PSR-2 编码风格规范 | Laravel China 社区](https://learnku.com/laravel/t/2079/psr-specification-psr-2-coding-style-specification)
+
 
 ## 编码设计规范
 - 短函数，不超过80行，最好40以内，只做一件事，有明确的输入输出
@@ -76,3 +78,7 @@ Laravel follows the PSR-2 coding standard and the PSR-4 autoloading standard.
 > [MySQL 数据库开发的33 条军规-阿里云开发者社区](https://developer.aliyun.com/article/766254)
 
 > [58到家数据库30条军规解读_w3cschool](https://www.w3cschool.cn/architectroad/architectroad-58-home-database-rules.html)
+
+## Laravel-best-practices
+
+[Laravel best practices](https://github.com/alexeymezenin/laravel-best-practices)
