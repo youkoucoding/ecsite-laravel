@@ -23,4 +23,4 @@ Route::get('/home', function () {
     return "hello world and laravel";
 });
 
-Route::get('auth/register', [AuthController::class, 'register']);
+Route::get('wx/auth/register', [AuthController::class, 'register']);
