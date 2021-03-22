@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers\Wx;
 
-use App\Http\Controllers\Controller;
 use App\Models\User;
-use App\Services\UserServices;
 use Illuminate\Http\Request;
+use App\Services\UserServices;
 use Illuminate\Support\Carbon;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
@@ -35,7 +36,7 @@ class AuthController extends Controller
         }
 
         //判断号码格式
-        $validator = Validator::make(['mobile' => $mobile], ['mobile' => 'regex:/^1[0-9]{10}$']);
+        $validator = Validator::make(['mobile' => $mobile], ['mobile' => 'regex:/^1[0-9]{10}$/']);
         if ($validator->failed()) {
             return ['errno' => 707, 'errmsg' => "号码格式不正确"];
         }
@@ -71,5 +72,49 @@ class AuthController extends Controller
                 'avatarUrl' => $avatarUrl
             ]
         ]];
+    }
+
+    //发送手机短信模块
+    public function regCaptcha(Request $request)
+    {
+        //todo get mobile number
+        $mobile = $request->input('mobile');
+        //todo 验证手机号是否为空
+        if (empty($mobile)) {
+            return ['errno' => 401, 'errmsg' => '参数错误'];
+        }
+
+        $validator = Validator::make(['mobile' => '$mobile'], ['mobile' => 'regex:/^1[0-9]{10}$/']);
+        if ($validator->failed()) {
+            return ['errno' => 707, 'errmsg' => '号码格式不正确'];
+        }
+
+        //todo 验证手机号是否已注册
+        $user = (new UserServices())->getByMobile($mobile);
+        if (!is_null($user)) {
+            return ['errno' => 705, 'errmsg' => '已注册'];
+        }
+
+        //todo 随机生成6位验证码
+        $code = random_int(100000, 999999);
+        //todo 防刷验证码
+        $lock = Cache::add('register_captcha_count_' . $mobile);
+        if ($lock) {
+            return ['errno' => 702, 'errmsg' => '稍后再试'];
+        }
+        $countKey = 'register_captcha_count_' . $mobile;
+        if (Cache::has($countKey)) {
+            $count = Cache::increment('register_captcha_count_' . $mobile);
+            if ($count > 10) {
+                return ['errno' => 702, 'errmsg' => '每日不能发送超过10次'];
+            }
+        } else {
+            Cache::put($countKey, 1, Carbon::tomorrow()->diffInDays());
+        }
+
+        Cache::put('register_captcha_' . $mobile, $code, 600);
+        //todo 发送短信
+        //
+        return ['errno' => 0, 'errmsg' => 'success', 'data' => null];
     }
 }

@@ -22,7 +22,15 @@ class AuthTest extends TestCase
 
     public function testRegister()
     {
-        $response = $this->post('wx/auth/register');
-        echo $response->getContent();
+        $response = $this->post('wx/auth/register', [
+            'username' => 'youkou',
+            'password' => 'root',
+            'mobile' => '1345671234',
+            'code' => '1234'
+        ]);
+        $response->assertStatus(200);
+        $ret = $response->getOriginalContent();
+        $this->assertEquals(0, $ret['errno']);
+        $this->assertNotEmpty($ret['data']);
     }
 }
