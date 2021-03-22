@@ -102,14 +102,10 @@ class AuthController extends Controller
         if ($lock) {
             return ['errno' => 702, 'errmsg' => '稍后再试'];
         }
-        $countKey = 'register_captcha_count_' . $mobile;
-        if (Cache::has($countKey)) {
-            $count = Cache::increment('register_captcha_count_' . $mobile);
-            if ($count > 10) {
-                return ['errno' => 702, 'errmsg' => '每日不能发送超过10次'];
-            }
-        } else {
-            Cache::put($countKey, 1, Carbon::tomorrow()->diffInDays());
+
+        $isPass = (new UserServices())->checkMobileSendCaptchaCount($mobile);
+        if (!$isPass) {
+            return ['errno' => 702, 'errmsg' => '当日验证码发送不能超过10次'];
         }
 
         Cache::put('register_captcha_' . $mobile, $code, 600);

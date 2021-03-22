@@ -1,7 +1,7 @@
 <?php
 
-use App\Http\Controllers\Wx\AuthController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Wx\AuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,4 +23,5 @@ Route::get('/home', function () {
     return "hello world and laravel";
 });
 
-Route::get('wx/auth/register', [AuthController::class, 'register']);
+Route::post('wx/auth/register', [AuthController::class, 'register']);
+Route::post('wx/auth/regCaptcha', [AuthController::class, 'regcaptcha']);

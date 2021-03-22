@@ -2,9 +2,9 @@
 
 namespace Tests\Feature;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
+use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class AuthTest extends TestCase
 {
@@ -28,9 +28,18 @@ class AuthTest extends TestCase
             'mobile' => '1345671234',
             'code' => '1234'
         ]);
-        $response->assertStatus(200);
+        // $response->assertStatus(200);
+        $response->assertStatus(405);
         $ret = $response->getOriginalContent();
         $this->assertEquals(0, $ret['errno']);
         $this->assertNotEmpty($ret['data']);
+    }
+
+    public function testRegCaptcha()
+    {
+        $response = $this->post('wx/auth/regCaptcha', [
+            'mobile' => '1345679034'
+        ]);
+        $response->assertJson(['errno' => 0, 'errmsg' => 'success', 'data' => null]);
     }
 }
