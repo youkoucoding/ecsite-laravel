@@ -40,6 +40,6 @@ class AuthTest extends TestCase
         $response = $this->post('wx/auth/regCaptcha', [
             'mobile' => '1345679034'
         ]);
-        $response->assertJson(['errno' => 0, 'errmsg' => 'success', 'data' => null]);
+        $response->assertJson(['errno' => 0, 'errmsg' => 'success']);
     }
 }
