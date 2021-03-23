@@ -12,9 +12,54 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Cache;
 // 相同命名空间 无需再use App\Http\Controllers\Wx\WxController;
 use Illuminate\Support\Facades\Validator;
+use League\CommonMark\Inline\Element\Code;
+use Symfony\Component\Console\Input\Input;
 
 class AuthController extends WxController
 {
+    /**
+     * 用户登录
+     * 
+     * @param mixed $name
+     * @return mixed
+     */
+    public function login(Request $request)
+    {
+        // 获取帐号密码
+        $username = $request->input('username');
+        $password = $request->input('password');
+
+        // 数据验证
+        if (empty($username) || empty($password)) {
+            return $this->fail(CodeResponse::PARAM_ILLEGAL);
+        }
+        // 验证帐号是否存在
+        $user = UserServices::getInstance()->getByUsername($username);
+        if (is_null($user)) {
+            return $this->fail(CodeResponse::AUTH_INVALID_ACCOUNT);
+        }
+        // 对密码进行验证
+        $isPass = Hash::check($password, $user->getAuthPassword());
+        if (!$isPass) {
+            return $this->fail(CodeResponse::AUTH_INVALID_ACCOUNT, '帐号密码错误');
+        }
+        // 更新登录信息
+        $user->last_login_time = now()->toDateTimeString();
+        $user->last_login_ip = $request->getClientIp();
+        if (!$user->save()) {
+            return $this->fail(CodeResponse::UPDATED_FAIL);
+        }
+        // 获取 $token
+        $token = Auth::guard('wx')->login($user);
+
+        // 组装数据并返回
+        return $this->success([
+            'token'     => '',
+            'userInfo'  => $username,
+            'avatarUrl' => $user->avatar
+        ]);
+    }
+
     /**
      * 用户注册
      *

@@ -42,4 +42,16 @@ class AuthTest extends TestCase
         ]);
         $response->assertJson(['errno' => 0, 'errmsg' => 'success']);
     }
+
+    /**
+     * 测试登录API
+     */
+    public function testLogin()
+    {
+        $response = $this->post('wx/auth/login', [
+            'username' => 'taro',
+            'password' => '123123123'
+        ]);
+        // dd($response->getOriginalContent());
+    }
 }

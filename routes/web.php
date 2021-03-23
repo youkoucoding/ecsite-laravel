@@ -25,3 +25,4 @@ Route::get('/home', function () {
 
 Route::post('wx/auth/register', [AuthController::class, 'register']);
 Route::post('wx/auth/regCaptcha', [AuthController::class, 'regcaptcha']);
+Route::post('wx/auth/login', [AuthController::class, 'login']);
