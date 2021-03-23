@@ -6,6 +6,8 @@ namespace Tests\Unit;
 
 use Tests\TestCase;
 use App\Services\UserServices;
+use App\Exceptions\BusinessException;
+use Illuminate\Bus\BusServiceProvider;
 
 class Authtest extends TestCase
 {
@@ -18,10 +20,21 @@ class Authtest extends TestCase
     {
         $mobile = '13012341243';
         foreach (range(0, 9) as $i) {
-            $isPass = (new UserServices())->checkMobileSendCaptchaCount($mobile);
+            $isPass = UserServices::getInstance()->checkMobileSendCaptchaCount($mobile);
             $this->assertTrue($isPass);
         }
-        $isPass = (new UserServices())->checkMobileSendCaptchaCount($mobile);
+        $isPass = UserServices::getInstance()->checkMobileSendCaptchaCount($mobile);
         $this->assertFalse($isPass);
+    }
+
+    public function testCheckCaptcha()
+    {
+        $mobile = '18534567871';
+        $code = UserServices::getInstance()->setCaptcha($mobile);
+        $isPass = UserServices::getInstance()->checkCaptcha($mobile, $code);
+        $this->asserTrue($isPass);
+
+        $this->expectExceptionObject(new BusinessException());
+        UserServices::getInstance()->checkCaptcha($mobile, $code);
     }
 }

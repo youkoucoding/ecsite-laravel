@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Wx;
 
 use App\CodeResponse;
+use App\Http\Controllers\Controller;
 
 class WxController extends Controller
 {
