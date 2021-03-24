@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Wx\AuthController;
+use App\Http\Controllers\Wx\BrandController;
+use App\Http\Controllers\Wx\CatalogController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,3 +28,9 @@ Route::get('/home', function () {
 Route::post('wx/auth/register', [AuthController::class, 'register']);
 Route::post('wx/auth/regCaptcha', [AuthController::class, 'regcaptcha']);
 Route::post('wx/auth/login', [AuthController::class, 'login']);
+
+Route::get('wx/catalog/index', [CatalogController::class, 'index']);
+Route::get('wx/catalog/current', [CatalogController::class, 'current']);
+
+Route::get('wx/brand/list', [BrandController::class, 'list']);
+Route::get('wx/brand/detail', [BrandController::class, 'detail']);
