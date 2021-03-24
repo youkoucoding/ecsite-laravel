@@ -1,14 +1,15 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\User;
 
-use App\Models\User;
+use App\Models\User\User;
+use App\Services\BaseServices;
 use Illuminate\Support\Carbon;
 // use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Cache;
 
 // 用户模块的类
-class UserServices extends BaseService
+class UserServices extends BaseServices
 {
     //使用单例模式
     // 三个私有，私有的实例变量，私有的构造函数，私有的克隆方法

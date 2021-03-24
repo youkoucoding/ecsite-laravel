@@ -5,7 +5,7 @@ namespace Tests\Unit;
 // use PHPUnit\Framework\TestCase;
 
 use Tests\TestCase;
-use App\Services\UserServices;
+use App\Services\User\UserServices;
 use App\Exceptions\BusinessException;
 use Illuminate\Bus\BusServiceProvider;
 

@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Wx;
 
-use App\Models\User;
 use App\CodeResponse;
+use App\Models\User\User;
 use Illuminate\Http\Request;
-use App\Services\UserServices;
 use Illuminate\Support\Carbon;
+use App\Services\User\UserServices;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Cache;

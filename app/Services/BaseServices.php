@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-class BaseService
+class BaseServices
 {
     //使用单例模式
     // 三个私有，protected实例变量，私有的构造函数，私有的克隆方法
