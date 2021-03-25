@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Wx\AuthController;
 use App\Http\Controllers\Wx\BrandController;
+use App\Http\Controllers\Wx\GoodsController;
 use App\Http\Controllers\Wx\CatalogController;
 
 /*
@@ -34,3 +35,8 @@ Route::get('wx/catalog/current', [CatalogController::class, 'current']);
 
 Route::get('wx/brand/list', [BrandController::class, 'list']);
 Route::get('wx/brand/detail', [BrandController::class, 'detail']);
+
+Route::get('/wx/goods/', [GoodsController::class,]);
+Route::get('/wx/goods/', [GoodsController::class,]);
+Route::get('/wx/goods/', [GoodsController::class,]);
+Route::get('/wx/goods/');
