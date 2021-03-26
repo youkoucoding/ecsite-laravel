@@ -36,7 +36,7 @@ Route::get('wx/catalog/current', [CatalogController::class, 'current']);
 Route::get('wx/brand/list', [BrandController::class, 'list']);
 Route::get('wx/brand/detail', [BrandController::class, 'detail']);
 
-Route::get('/wx/goods/', [GoodsController::class,]);
-Route::get('/wx/goods/', [GoodsController::class,]);
-Route::get('/wx/goods/', [GoodsController::class,]);
-Route::get('/wx/goods/');
+Route::get('/wx/goods/category', [GoodsController::class, 'category']);
+Route::get('/wx/goods/count', [GoodsController::class, 'count']);
+Route::get('/wx/goods/list', [GoodsController::class, 'list']);
+Route::get('/wx/goods/detail', [GoodsController::class, 'detail']);
